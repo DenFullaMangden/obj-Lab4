@@ -64,18 +64,14 @@ public class CarController {
                     car.turnLeft();
                 }
 
-                // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
-//              System.out.println(car.getDirection());
-//              System.out.println(car.getPosition());
 
-//                if (car.getPosition().distance(new Point2D.Double(350, 350)) < 100 && car instanceof Volvo240
-//                    && !workShop.isFull()) {
-//                    if (!((Volvo240) car).isInWorkShop()) {
-//                        workShop.load((Volvo240) car);
-//                        ((Volvo240) car).load();
-//                    }
-//                }
+                if (car.getPosition().distance(new Point2D.Double(350, 350)) < 100 && car instanceof Volvo240
+                    && !workShop.isFull()) {
+                    if (!((Volvo240) car).isStored()) {
+                        workShop.load((Volvo240) car);
+                    }
+                }
             }
         }
     }

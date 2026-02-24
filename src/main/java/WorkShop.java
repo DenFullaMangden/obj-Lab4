@@ -11,12 +11,20 @@ public class WorkShop<T extends Storable> extends Vehicle {
         this.carBed = new CarBed(capacity);
     }
 
-    public void loadCar(T car) {
+    public void load(T car) {
         this.carBed.load(car);
     }
 
-    public T unloadCar() {
+    public T unload() {
         return this.carBed.unload();
+    }
+
+    public boolean isFull() {
+        return carBed.isFull();
+    }
+
+    public boolean isEmpty() {
+        return carBed.isEmpty();
     }
 
     private class CarBed implements Storage<T> {
@@ -38,7 +46,7 @@ public class WorkShop<T extends Storable> extends Vehicle {
 
         @Override
         public void load(T car) {
-            if (isFull()) {
+            if (this.isFull()) {
                 throw new IllegalStateException("The car carrier is full.");
             }
             if (car.isStored()) {

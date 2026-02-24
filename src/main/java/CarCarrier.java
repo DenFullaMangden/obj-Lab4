@@ -11,12 +11,20 @@ public class CarCarrier extends Vehicle {
         this.carBed = new CarBed(capacity);
     }
 
-    public void loadCar(SmallCar car) {
+    public void load(SmallCar car) {
         this.carBed.load(car);
     }
 
-    public SmallCar unloadCar() {
+    public SmallCar unload() {
         return this.carBed.unload();
+    }
+
+    public boolean isFull() {
+        return carBed.isFull();
+    }
+
+    public boolean isEmpty() {
+        return carBed.isEmpty();
     }
 
     private class CarBed implements Storage<SmallCar> {
