@@ -17,7 +17,12 @@ public class WorkShop<T extends Storable>  {
     }
 
     public void load(T car) {
-        this.carBed.load(car);
+        try {
+            this.carBed.load(car);
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
     }
 
     public T unload() {
