@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1a5d80b4-ac8f-4347-9ad9-72ee4d1304fb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../pics/Saab95.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../pics/Saab95.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pics/Scania.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../pics/Scania.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pics/Volvo240.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../pics/Volvo240.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pics/VolvoBrand.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../pics/VolvoBrand.jpg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "DenFullaMangden"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/DenFullaMangden/obj-lab3.git",
+    "accountId": "cf082ad2-ef18-4d8b-97d7-1c8c5230db6c"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="39ZfLnAFSiXF8LjpCikAb2nVnMK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/afulm/P300/Skola/Objektorienterad programmering och design/Labs/Lab3/lab3/src/test"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a5d80b4-ac8f-4347-9ad9-72ee4d1304fb" name="Changes" comment="" />
+      <created>1770908459250</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770908459250</updated>
+    </task>
+    <servers />
+  </component>
+</project>
