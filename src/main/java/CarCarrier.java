@@ -2,16 +2,39 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class CarCarrier extends Vehicle implements BigCar {
+public class CarCarrier extends Vehicle implements BigCar, Ramp {
 
     private CarBed carBed;
     private boolean isStored;
     private Storage<?> currentStorage;
+    private boolean rampUp;
 
     public CarCarrier(int capacity) {
         super(2, Color.blue, 150, "Car Carrier");
         this.carBed = new CarBed(capacity);
         this.unStore();
+        this.setRampUp();
+    }
+
+    @Override
+    public boolean getRampUp() {
+        return this.rampUp;
+    }
+
+    @Override
+    public void setRampUp() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        this.rampUp = true;
+    }
+
+    @Override
+    public void setRampDown() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        this.rampUp = false;
     }
 
     public void load(SmallCar car) {

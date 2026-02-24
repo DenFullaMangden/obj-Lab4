@@ -62,10 +62,18 @@ public abstract class Vehicle implements Movable {
     }
 
     private void incrementSpeed(double amount) {
-	    this.currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
+        if (amount > 100 || amount < 0) {
+            System.out.println("Amount must be between 0 and 100");
+            return;
+        }
+        this.currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
 
     private void decrementSpeed(double amount) {
+        if (amount > 100 || amount < 0) {
+            System.out.println("Amount must be between 0 and 100");
+            return;
+        }
         this.currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
 

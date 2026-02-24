@@ -121,16 +121,16 @@ public class CarController {
 
     void liftBed() {
         for (Vehicle car : cars) {
-            if (car instanceof Scania) {
-                ((Scania) car).setLoadAngle(70);
+            if (car instanceof Ramp) {
+                ((Ramp) car).setRampUp();
             }
         }
     }
 
     void lowerBed() {
         for (Vehicle car : cars) {
-            if (car instanceof Scania) {
-                ((Scania) car).setLoadAngle(0);
+            if (car instanceof Ramp) {
+                ((Ramp) car).setRampDown();
             }
         }
     }

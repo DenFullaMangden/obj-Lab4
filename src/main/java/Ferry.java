@@ -2,15 +2,38 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class Ferry extends Vehicle {
+public class Ferry extends Vehicle implements Ramp{
 
     private CarBed carBed;
     private TruckBed truckBed;
+    private boolean rampUp;
 
     public Ferry(int capacity) {
         super(20, Color.blue, 75, "Ferry");
         this.carBed = new CarBed(capacity);
         this.truckBed = new TruckBed(capacity);
+        this.setRampUp();
+    }
+
+    @Override
+    public boolean getRampUp() {
+        return this.rampUp;
+    }
+
+    @Override
+    public void setRampUp() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        this.rampUp = true;
+    }
+
+    @Override
+    public void setRampDown() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        this.rampUp = false;
     }
 
     public void load(SmallCar car) {
@@ -69,7 +92,6 @@ public class Ferry extends Vehicle {
             if (isEmpty()) {
                 throw new IllegalStateException("No cars to unload.");
             }
-
             SmallCar car = loadedCars.removeLast();
             car.unStore();
             return car;
@@ -111,7 +133,6 @@ public class Ferry extends Vehicle {
             if (isEmpty()) {
                 throw new IllegalStateException("No cars to unload.");
             }
-
             BigCar car = this.loadedCars.removeLast();
             car.unStore();
             return car;

@@ -1,52 +1,78 @@
 import java.awt.*;
 
-public class Scania extends Vehicle implements BigCar {
+public class Scania extends Vehicle implements BigCar, Ramp {
 
-    private double  loadAngle = 0;
+    private double rampAngle;
+    private boolean rampUp;
     private boolean isStored;
     private Storage<?> currentStorage;
 
     public Scania () {
         super(2, Color.white, 150, "Scania");
         this.unStore();
+        this.setRampUp();
     }
 
-    public double getLoadAngle() {
-        return loadAngle;
+    public double getRampAngle() {
+        return rampAngle;
     }
 
-    public void setLoadAngle(double angle) {
-        if (angle > 70 || angle < 0) {
-            throw new IllegalArgumentException("Angle must be between 0 and 70!");
+    @Override
+    public boolean getRampUp() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
         }
-        if (this.isDriving()) {
-            throw new IllegalStateException("Cannot change angle while driving!");
+        return this.rampUp;
+    }
+
+    @Override
+    public void setRampUp() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
         }
-        this.loadAngle = angle;
+        this.setRampAngle(0);
+        this.rampUp = true;
+    }
+
+    @Override
+    public void setRampDown() {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        this.setRampAngle(70);
+        this.rampUp = false;
+    }
+
+    public void setRampAngle(double angle) {
+        if (this.getCurrentSpeed() > 0) {
+            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+        }
+        if (angle < 0 || angle > 70) {
+            throw new IllegalArgumentException("Ramp angle must be between 0 and 70 degrees.");
+        }
+        this.rampAngle = angle;
+        if (angle == 0) {
+            this.rampUp = true;
+        }
+        else {
+            this.rampUp = false;
+        }
     }
 
     @Override
     public void startEngine() {
-        if (this.noDriving()) {
-            throw new IllegalStateException("Cannot drive when ramp is up.");
+        if (!this.rampUp) {
+            throw new IllegalStateException("Cannot start engine while ramp is down!");
         }
         super.startEngine();
     }
 
     @Override
     public void gas(double amount) {
-        if (this.noDriving()) {
-            throw new IllegalStateException("Cannot drive when ramp is up.");
+        if (!this.rampUp) {
+            throw new IllegalStateException("Cannot accelerate while ramp is down!");
         }
         super.gas(amount);
-    }
-
-    public boolean isDriving() {
-        return this.getCurrentSpeed() > 0;
-    }
-
-    public boolean noDriving() {
-        return this.getLoadAngle() > 0;
     }
 
     @Override
