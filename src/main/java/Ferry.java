@@ -17,16 +17,15 @@ public class Ferry extends Vehicle {
         this.carBed.load(car);
     }
 
-    public SmallCar unload() {
-        return this.carBed.unload();
-    }
     public void load(BigCar car) {
         this.truckBed.load(car);
     }
 
-//    public BigCar unload() {
-//        return this.truckBed.unload();
-//    }
+    public Storable unload() {
+        if (!truckBed.isEmpty())
+            return this.truckBed.unload();
+        return carBed.unload();
+    }
 
     public boolean isFull() {
         return carBed.isFull() && truckBed.isFull();
