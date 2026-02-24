@@ -8,6 +8,7 @@ public class Volvo240 extends Vehicle implements SmallCar {
 
     public Volvo240() {
         super(4, Color.black, 100, "Volvo 240");
+        this.unStore();
     }
 
     @Override

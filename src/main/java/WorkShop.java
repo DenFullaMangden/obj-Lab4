@@ -2,13 +2,18 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class WorkShop<T extends Storable> extends Vehicle {
+public class WorkShop<T extends Storable>  {
 
     private CarBed carBed;
+    private Point2D.Double position;
 
-    public WorkShop(int capacity) {
-        super(2, Color.blue, 150, "Car Carrier");
+    public WorkShop(int capacity, double x, double y) {
         this.carBed = new CarBed(capacity);
+        this.position = new Point2D.Double(x,y);
+    }
+
+    public Point2D.Double getPosition() {
+        return this.position;
     }
 
     public void load(T car) {

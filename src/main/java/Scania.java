@@ -3,10 +3,12 @@ import java.awt.*;
 public class Scania extends Vehicle implements BigCar {
 
     private double  loadAngle = 0;
+    private boolean isStored;
+    private Storage<?> currentStorage;
 
     public Scania () {
         super(2, Color.white, 150, "Scania");
-        this.stopEngine();
+        this.unStore();
     }
 
     public double getLoadAngle() {
@@ -45,5 +47,35 @@ public class Scania extends Vehicle implements BigCar {
 
     public boolean noDriving() {
         return this.getLoadAngle() > 0;
+    }
+
+    @Override
+    public boolean isStored() {
+        return this.isStored;
+    }
+
+    @Override
+    public void store(Storage<?> storage) {
+        if (!isStored && storage != null) {
+            this.isStored = true;
+            this.currentStorage = storage;
+            this.setPosition(currentStorage.getPosition());
+            this.stopEngine();
+        }
+    }
+
+    @Override
+    public void unStore() {
+        this.isStored = false;
+        this.currentStorage = null;
+    }
+
+    @Override
+    public void move() {
+        if (isStored && currentStorage != null) {
+            this.setPosition(currentStorage.getPosition());
+        } else {
+            super.move();
+        }
     }
 }

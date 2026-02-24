@@ -9,6 +9,7 @@ public class Saab95 extends Vehicle implements SmallCar {
     public Saab95() {
         super(2, Color.red, 125, "Saab 95");
         this.turboOn = false;
+        this.unStore();
     }
     
     public void setTurboOn() {

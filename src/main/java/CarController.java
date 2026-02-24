@@ -23,7 +23,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
-    WorkShop<Volvo240> workShop = new WorkShop<>(10);
+    WorkShop<Volvo240> workShop = new WorkShop<>(10,300,300);
 
     //methods:
     public static void main(String[] args) {
@@ -39,7 +39,6 @@ public class CarController {
         Scania scania = new Scania();
         scania.setPosition(new Point2D.Double(0,200));
         cc.cars.add(scania);
-        cc.workShop.setPosition(new Point2D.Double(300,300));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);

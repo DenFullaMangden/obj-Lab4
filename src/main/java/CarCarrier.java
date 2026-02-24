@@ -2,13 +2,16 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class CarCarrier extends Vehicle {
+public class CarCarrier extends Vehicle implements BigCar {
 
     private CarBed carBed;
+    private boolean isStored;
+    private Storage<?> currentStorage;
 
     public CarCarrier(int capacity) {
         super(2, Color.blue, 150, "Car Carrier");
         this.carBed = new CarBed(capacity);
+        this.unStore();
     }
 
     public void load(SmallCar car) {
@@ -25,6 +28,36 @@ public class CarCarrier extends Vehicle {
 
     public boolean isEmpty() {
         return carBed.isEmpty();
+    }
+
+    @Override
+    public boolean isStored() {
+        return this.isStored;
+    }
+
+    @Override
+    public void store(Storage<?> storage) {
+        if (!isStored && storage != null) {
+            this.isStored = true;
+            this.currentStorage = storage;
+            this.setPosition(currentStorage.getPosition());
+            this.stopEngine();
+        }
+    }
+
+    @Override
+    public void unStore() {
+        this.isStored = false;
+        this.currentStorage = null;
+    }
+
+    @Override
+    public void move() {
+        if (isStored && currentStorage != null) {
+            this.setPosition(currentStorage.getPosition());
+        } else {
+            super.move();
+        }
     }
 
     private class CarBed implements Storage<SmallCar> {

@@ -1,2 +1,2 @@
-public interface BigCar {
+public interface BigCar extends Storable {
 }
