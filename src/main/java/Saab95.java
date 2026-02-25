@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Saab95 extends Vehicle implements SmallCar {
+public class Saab95 extends Vehicle implements SmallCar, Turbo {
 
     private boolean turboOn;
     private boolean isStored;
