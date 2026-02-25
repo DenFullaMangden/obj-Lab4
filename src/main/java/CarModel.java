@@ -4,12 +4,12 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-
 public class CarModel {
 
-    private final int delay = 50;
+    private int delay;
     private Timer timer = new Timer(delay, new TimerListener());
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
+    public final ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    private final ArrayList<CarObserver> observers = new ArrayList<CarObserver>();
 
     public static void main(String[] args) {
         CarModel carModel = new CarModel();
@@ -18,28 +18,14 @@ public class CarModel {
         volvo.setPosition(new Point2D.Double(0,300));
         volvo.gas(100);
         carModel.vehicles.add(volvo);
-        
 
         carModel.timer.start();
         while (true);
     }
 
-    private class TimerListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-                for (Vehicle vehicle : vehicles) {
-                    vehicle.move();
-
-                System.out.println(vehicle.getPosition());
-
-                int x = (int) Math.round(vehicle.getPosition().getX());
-                int y = (int) Math.round(vehicle.getPosition().getY());
-                if (x > 700 || x < 0 || y > 500 || y < 0) {
-                    vehicle.turnLeft();
-                    vehicle.turnLeft();
-                }
-            }
-        }
+    public void startTimer(int delay) {
+        this.timer = new Timer(delay, new TimerListener());
+        this.timer.start();
     }
 
     void gas(int amount) {
@@ -100,7 +86,6 @@ public class CarModel {
         }
     }
 
-    private final ArrayList<CarObserver> observers = new ArrayList<CarObserver>();
     public void addObserver(CarObserver observer){
         observers.add(observer);
     }
@@ -113,6 +98,23 @@ public class CarModel {
         }
     }
 
+    private class TimerListener implements ActionListener {
 
+        public void actionPerformed(ActionEvent e) {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.move();
+
+                System.out.println(vehicle.getPosition());
+
+                int x = (int) Math.round(vehicle.getPosition().getX());
+                int y = (int) Math.round(vehicle.getPosition().getY());
+                if (x > 700 || x < 0 || y > 500 || y < 0) {
+                    vehicle.turnLeft();
+                    vehicle.turnLeft();
+                }
+            }
+            multicastStatusChange(new CarStatus(CarModel.this.vehicles));
+        }
+    }
 
 }
