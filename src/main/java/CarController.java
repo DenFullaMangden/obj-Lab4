@@ -17,7 +17,8 @@ public class CarController {
         carModel.vehicles.add(volvo);
         carModel.startTimer(50);
 
-        while (true);
+        CarView drawPanel = new CarView("Test", carModel);
+        //while (true);
     }
 
 }
