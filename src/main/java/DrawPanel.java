@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-// This panel represents the animated part of the view with the car images.
-
 public class DrawPanel extends JPanel implements CarObserver {
 
     BufferedImage volvoImage;
@@ -20,12 +18,10 @@ public class DrawPanel extends JPanel implements CarObserver {
         this.vehicles = vehicles;
     }
 
-    // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-        // Print an error message in case file is not found with a try/catch block
         try {
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
@@ -38,7 +34,6 @@ public class DrawPanel extends JPanel implements CarObserver {
 
     }
 
-    // This method is called each time the panel updates/refreshes/repaints itself
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -60,6 +55,7 @@ public class DrawPanel extends JPanel implements CarObserver {
 
     @Override
     public void actOnStatusChange(CarStatus newStatus) {
+        this.vehicles = newStatus.getVehicles();
         this.repaint();
     }
 }
