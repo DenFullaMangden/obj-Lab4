@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CarStatus {
-    private ArrayList<Vehicle> vehicles;
+    private final ArrayList<Vehicle> vehicles;
 
     public CarStatus(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;

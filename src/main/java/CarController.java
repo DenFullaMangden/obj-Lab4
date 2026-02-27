@@ -1,18 +1,27 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public class CarController {
-    public static void main(String[] args) {
-        CarModel carModel = new CarModel();
-        CarView frame = new CarView("CarSim 1.0", carModel);
+    private CarModel model;
+    private CarView view;
 
-        Volvo240 volvo = new Volvo240();
-        volvo.setPosition(new Point2D.Double(0, 300));
-        carModel.vehicles.add(volvo);
-
-        carModel.startTimer(50);
+    public CarController(CarModel model, CarView view) {
+        this.model = model;
+        this.view = view;
+        initListeners();
     }
+
+    private void initListeners() {
+        ControlPanel cp = view.controlPanel;
+
+        cp.gasSpinner.addChangeListener(e -> cp.gasAmount = (int) ((JSpinner) e.getSource()).getValue());
+        cp.gasButton.addActionListener(e -> model.gas(cp.gasAmount));
+        cp.brakeButton.addActionListener(e -> model.brake(cp.gasAmount));
+        cp.startButton.addActionListener(e -> model.start());
+        cp.stopButton.addActionListener(e -> model.stop());
+        cp.turboOnButton.addActionListener(e -> model.setTurboOn());
+        cp.turboOffButton.addActionListener(e -> model.setTurboOff());
+        cp.liftBedButton.addActionListener(e -> model.liftBed());
+        cp.lowerBedButton.addActionListener(e -> model.lowerBed());
+    }
+
 }

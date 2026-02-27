@@ -10,6 +10,7 @@ public abstract class Vehicle implements Movable {
     private String modelName;
     private Point2D.Double position;
     private Direction direction;
+    private boolean engineOn;
 
     public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
@@ -49,36 +50,34 @@ public abstract class Vehicle implements Movable {
         return this.position;
     }
 
+    public boolean getEngineON() {
+        return engineOn;
+    }
+
     public void setColor(Color clr) {
 	    color = clr;
     }
 
     public void startEngine() {
 	    this.currentSpeed = 0.1;
+        this.engineOn = true;
     }
 
     public void stopEngine() {
 	    this.currentSpeed = 0;
-    }
-
-    private void incrementSpeed(double amount) {
-        if (amount > 100 || amount < 0) {
-            System.out.println("Amount must be between 0 and 100");
-            return;
-        }
-        this.currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
-    }
-
-    private void decrementSpeed(double amount) {
-        if (amount > 100 || amount < 0) {
-            System.out.println("Amount must be between 0 and 100");
-            return;
-        }
-        this.currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
+        this.engineOn = false;
     }
 
     protected double speedFactor() {
         return this.enginePower * 0.01;
+    }
+
+    private void incrementSpeed(double amount) {
+        this.currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
+    }
+
+    private void decrementSpeed(double amount) {
+        this.currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
 
     protected void setPosition(Point2D.Double position) {
@@ -86,10 +85,18 @@ public abstract class Vehicle implements Movable {
     }
 
     public void gas(double amount) {
+        if (amount > 100 || amount < 0 || !this.engineOn) {
+            System.out.println("Amount must be between 0 and 100 and the engine must be started.");
+            return;
+        }
         this.incrementSpeed(amount);
     }
 
     public void brake(double amount) {
+        if (amount > 100 || amount < 0) {
+            System.out.println("Amount must be between 0 and 100");
+            return;
+        }
         decrementSpeed(amount);
     }
 
