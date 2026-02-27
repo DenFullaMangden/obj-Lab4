@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CarModel {
 
     private int delay;
     private Timer timer = new Timer(delay, new TimerListener());
-    public final ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    public final List<Vehicle> vehicles = new ArrayList<Vehicle>();
     private final ArrayList<CarObserver> observers = new ArrayList<CarObserver>();
 
     public void startTimer(int delay) {

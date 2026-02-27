@@ -1,13 +1,13 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class CarStatus {
-    private final ArrayList<Vehicle> vehicles;
+    private final List<Vehicle> vehicles;
 
-    public CarStatus(ArrayList<Vehicle> vehicles) {
+    public CarStatus(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
-    public ArrayList<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicles;
     }
 }
