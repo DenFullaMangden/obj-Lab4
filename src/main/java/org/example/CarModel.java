@@ -14,7 +14,7 @@ public class CarModel implements CarModelInterface{
     private int delay;
     private int width;
     private int height;
-    private Timer timer = new Timer(delay, new TimerListener());
+    private Timer timer;
     public final List<Vehicle> vehicles = new ArrayList<Vehicle>();
     private final List<CarObserver> observers = new ArrayList<CarObserver>();
 
@@ -107,6 +107,7 @@ public class CarModel implements CarModelInterface{
     public void addObserver(CarObserver observer){
         observers.add(observer);
     }
+
     public void removeObserver(CarObserver observer){
         observers.remove(observer);
     }
