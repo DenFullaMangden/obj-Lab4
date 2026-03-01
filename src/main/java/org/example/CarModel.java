@@ -12,12 +12,17 @@ import java.util.List;
 public class CarModel implements CarModelInterface{
 
     private int delay;
+    private int width;
+    private int height;
     private Timer timer = new Timer(delay, new TimerListener());
     public final List<Vehicle> vehicles = new ArrayList<Vehicle>();
-    private final ArrayList<CarObserver> observers = new ArrayList<CarObserver>();
+    private final List<CarObserver> observers = new ArrayList<CarObserver>();
 
-    public void startTimer(int delay) {
-        this.timer = new Timer(delay, new TimerListener());
+    public void startTimer(int delay, int height, int width) {
+        this.width = width;
+        this.height = height;
+        this.delay = delay;
+        this.timer = new Timer(this.delay, new TimerListener());
         this.timer.start();
     }
 
@@ -32,28 +37,28 @@ public class CarModel implements CarModelInterface{
     @Override
     public void brake(int amount) {
         double brake = ((double) amount/100);
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             vehicle.brake(brake);
         }
     }
 
     @Override
     public void start() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             vehicle.startEngine();
         }
     }
 
     @Override
     public void stop() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             vehicle.stopEngine();
         }
     }
 
     @Override
     public void setTurboOn() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             if (vehicle instanceof Turbo) {
                 ((Saab95) vehicle).setTurboOn();
             }
@@ -62,7 +67,7 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void setTurboOff() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             if (vehicle instanceof Turbo) {
                 ((Turbo) vehicle).setTurboOff();
             }
@@ -71,7 +76,7 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void liftBed() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             if (vehicle instanceof Ramp) {
                 ((Ramp) vehicle).setRampUp();
             }
@@ -80,7 +85,7 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void lowerBed() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : this.vehicles) {
             if (vehicle instanceof Ramp) {
                 ((Ramp) vehicle).setRampDown();
             }
@@ -94,7 +99,9 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void removeVehicle() {
-
+        if (!this.vehicles.isEmpty()) {
+            this.vehicles.removeLast();
+        }
     }
 
     public void addObserver(CarObserver observer){
@@ -112,14 +119,13 @@ public class CarModel implements CarModelInterface{
     private class TimerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : vehicles) {
+            for (Vehicle vehicle : CarModel.this.vehicles) {
                 vehicle.move();
-
-                System.out.println(vehicle.getPosition());
+                // System.out.println(vehicle.getPosition());
 
                 int x = (int) Math.round(vehicle.getPosition().getX());
                 int y = (int) Math.round(vehicle.getPosition().getY());
-                if (x > 700 || x < 0 || y > 500 || y < 0) {
+                if (x > (CarModel.this.width-100) || x < 0 || y > (CarModel.this.height-60) || y < 0) {
                     vehicle.turnLeft();
                     vehicle.turnLeft();
                 }

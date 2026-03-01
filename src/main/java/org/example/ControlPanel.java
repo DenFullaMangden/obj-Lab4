@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlPanel extends JPanel {
+    private final int width;
     private CarControlListener carControlListener;
-    private final int X;
 
     public JPanel gasPanel = new JPanel();
     public JSpinner gasSpinner = new JSpinner();
-    public int gasAmount = 10;
+    public int gasAmount = 50;
     public JLabel gasLabel = new JLabel("Amount of gas");
 
     public JButton gasButton = new JButton("Gas");
@@ -23,14 +23,14 @@ public class ControlPanel extends JPanel {
     public JButton addCarButton = new JButton("<html>Add<br />car</html>");
     public JButton removeCarButton = new JButton("<html>Remove<br />car</html>");
 
-    public ControlPanel(int X) {
-        this.X = X;
+    public ControlPanel(int width) {
+        this.width = width;
         this.initButtons();
         this.initListeners();
     }
 
     private void initButtons() {
-        SpinnerModel spinnerModel = new SpinnerNumberModel(10, 0, 100, 1);
+        SpinnerModel spinnerModel = new SpinnerNumberModel(50, 0, 100, 1);
         this.gasSpinner = new JSpinner(spinnerModel);
 
         this.gasPanel.setLayout(new BorderLayout());
@@ -51,16 +51,16 @@ public class ControlPanel extends JPanel {
         buttonPanel.add(lowerBedButton, 6);
         buttonPanel.add(removeCarButton, 7);
 
-        buttonPanel.setPreferredSize(new Dimension((X / 2) + 4, 200));
+        buttonPanel.setPreferredSize(new Dimension((this.width / 2) + 4, 200));
         buttonPanel.setBackground(Color.CYAN);
 
         this.startButton.setBackground(Color.blue);
         this.startButton.setForeground(Color.green);
-        this.startButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
+        this.startButton.setPreferredSize(new Dimension(this.width / 5 - 15, 200));
 
         this.stopButton.setBackground(Color.red);
         this.stopButton.setForeground(Color.black);
-        this.stopButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
+        this.stopButton.setPreferredSize(new Dimension(this.width / 5 - 15, 200));
 
         this.add(buttonPanel);
         this.add(startButton);
@@ -77,6 +77,8 @@ public class ControlPanel extends JPanel {
         this.turboOffButton.addActionListener(e -> carControlListener.setTurboOff());
         this.liftBedButton.addActionListener(e -> carControlListener.liftBed());
         this.lowerBedButton.addActionListener(e -> carControlListener.lowerBed());
+        this.addCarButton.addActionListener(e -> carControlListener.addCar());
+        this.removeCarButton.addActionListener(e -> carControlListener.removeCar());
     }
 
     public void addCarControlListener(CarControlListener carControlListener) {

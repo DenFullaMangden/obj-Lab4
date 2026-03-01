@@ -10,7 +10,7 @@ public class Application {
 
     public static void main(String[] args) {
         CarModel carModel = new CarModel();
-        CarView carView = new CarView("CarSim 7.0");
+        CarView carView = new CarView("CarSim 7.0", 800, 800);
         CarController carController = new CarController(carModel);
 
         carModel.vehicles.add(new Volvo240(new Point2D.Double(0, 0)));
@@ -20,6 +20,6 @@ public class Application {
         carModel.addObserver(carView.getDrawPanel());
         carView.getControlPanel().addCarControlListener(carController);
 
-        carModel.startTimer(50);
+        carModel.startTimer(50, 560, 800);
     }
 }

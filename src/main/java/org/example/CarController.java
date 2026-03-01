@@ -9,51 +9,51 @@ public class CarController implements CarControlListener {
 
     @Override
     public void gas(int amount) {
-        model.gas(amount);
+        this.model.gas(amount);
     }
 
     @Override
     public void brake(int amount) {
-        model.brake(amount);
+        this.model.brake(amount);
     }
 
     @Override
     public void start() {
-        model.start();
+        this.model.start();
     }
 
     @Override
     public void stop() {
-        model.stop();
+        this.model.stop();
     }
 
     @Override
     public void setTurboOn() {
-        model.setTurboOn();
+        this.model.setTurboOn();
     }
 
     @Override
     public void setTurboOff() {
-        model.setTurboOff();
+        this.model.setTurboOff();
     }
 
     @Override
     public void liftBed() {
-        model.liftBed();
+        this.model.liftBed();
     }
 
     @Override
     public void lowerBed() {
-        model.lowerBed();
+        this.model.lowerBed();
     }
 
     @Override
     public void addCar() {
-
+        this.model.addVehicle();
     }
 
     @Override
     public void removeCar() {
-
+        this.model.removeVehicle();
     }
 }

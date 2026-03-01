@@ -4,20 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CarView extends JFrame {
-    private static final int X = 800;
-    private static final int Y = 800;
-    private ControlPanel controlPanel = new ControlPanel(X);
-    private DrawPanel drawPanel = new DrawPanel(X, Y - 240);
+    private final DrawPanel drawPanel;
+    private ControlPanel controlPanel;
 
-    public CarView(String title) {
+    public CarView(String title, int X, int Y) {
         this.setTitle(title);
         this.controlPanel = new ControlPanel(X);
-
         this.setPreferredSize(new Dimension(X, Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        this.drawPanel = new DrawPanel(X, Y - 240);
+        this.controlPanel = new ControlPanel(X);
+
         this.add(drawPanel);
         this.add(controlPanel);
-
         this.pack();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
