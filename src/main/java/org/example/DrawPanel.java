@@ -22,10 +22,6 @@ public class DrawPanel extends JPanel implements CarObserver {
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
-    public void syncCars(ArrayList<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
@@ -61,8 +57,8 @@ public class DrawPanel extends JPanel implements CarObserver {
     }
 
     @Override
-    public void actOnStatusChange(CarStatus newStatus) {
-        this.vehicles = newStatus.getVehicles();
+    public void actOnStatusChange(CarStatus carStatus) {
+        this.vehicles = carStatus.getVehicles();
         this.repaint();
     }
 }

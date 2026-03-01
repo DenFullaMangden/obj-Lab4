@@ -1,29 +1,59 @@
 package org.example;
 
-import javax.swing.*;
-
-public class CarController {
+public class CarController implements CarControlListener {
     private CarModel model;
-    private CarView view;
 
-    public CarController(CarModel model, CarView view) {
+    public CarController(CarModel model) {
         this.model = model;
-        this.view = view;
-        initListeners();
     }
 
-    private void initListeners() {
-        ControlPanel cp = view.controlPanel;
-
-        cp.gasSpinner.addChangeListener(e -> cp.gasAmount = (int) ((JSpinner) e.getSource()).getValue());
-        cp.gasButton.addActionListener(e -> model.gas(cp.gasAmount));
-        cp.brakeButton.addActionListener(e -> model.brake(cp.gasAmount));
-        cp.startButton.addActionListener(e -> model.start());
-        cp.stopButton.addActionListener(e -> model.stop());
-        cp.turboOnButton.addActionListener(e -> model.setTurboOn());
-        cp.turboOffButton.addActionListener(e -> model.setTurboOff());
-        cp.liftBedButton.addActionListener(e -> model.liftBed());
-        cp.lowerBedButton.addActionListener(e -> model.lowerBed());
+    @Override
+    public void gas(int amount) {
+        model.gas(amount);
     }
 
+    @Override
+    public void brake(int amount) {
+        model.brake(amount);
+    }
+
+    @Override
+    public void start() {
+        model.start();
+    }
+
+    @Override
+    public void stop() {
+        model.stop();
+    }
+
+    @Override
+    public void setTurboOn() {
+        model.setTurboOn();
+    }
+
+    @Override
+    public void setTurboOff() {
+        model.setTurboOff();
+    }
+
+    @Override
+    public void liftBed() {
+        model.liftBed();
+    }
+
+    @Override
+    public void lowerBed() {
+        model.lowerBed();
+    }
+
+    @Override
+    public void addCar() {
+
+    }
+
+    @Override
+    public void removeCar() {
+
+    }
 }

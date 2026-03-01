@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlPanel extends JPanel {
+    private CarControlListener carControlListener;
     private final int X;
 
     public JPanel gasPanel = new JPanel();
@@ -24,10 +25,11 @@ public class ControlPanel extends JPanel {
 
     public ControlPanel(int X) {
         this.X = X;
-        this.initComponents();
+        this.initButtons();
+        this.initListeners();
     }
 
-    private void initComponents() {
+    private void initButtons() {
         SpinnerModel spinnerModel = new SpinnerNumberModel(10, 0, 100, 1);
         this.gasSpinner = new JSpinner(spinnerModel);
 
@@ -63,5 +65,21 @@ public class ControlPanel extends JPanel {
         this.add(buttonPanel);
         this.add(startButton);
         this.add(stopButton);
+    }
+
+    private void initListeners() {
+        this.gasSpinner.addChangeListener(e -> this.gasAmount = (int) ((JSpinner) e.getSource()).getValue());
+        this.gasButton.addActionListener(e -> carControlListener.gas(this.gasAmount));
+        this.brakeButton.addActionListener(e -> carControlListener.brake(this.gasAmount));
+        this.startButton.addActionListener(e -> carControlListener.start());
+        this.stopButton.addActionListener(e -> carControlListener.stop());
+        this.turboOnButton.addActionListener(e -> carControlListener.setTurboOn());
+        this.turboOffButton.addActionListener(e -> carControlListener.setTurboOff());
+        this.liftBedButton.addActionListener(e -> carControlListener.liftBed());
+        this.lowerBedButton.addActionListener(e -> carControlListener.lowerBed());
+    }
+
+    public void addCarControlListener(CarControlListener carControlListener) {
+        this.carControlListener = carControlListener;
     }
 }

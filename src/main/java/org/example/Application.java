@@ -11,17 +11,15 @@ public class Application {
     public static void main(String[] args) {
         CarModel carModel = new CarModel();
         CarView carView = new CarView("CarSim 7.0");
-        carModel.addObserver(carView.drawPanel);
+        CarController carController = new CarController(carModel);
 
-        Volvo240 volvo = new Volvo240(new Point2D.Double(0, 0));
-        Saab95 saab = new Saab95(new Point2D.Double(100, 100));
-        Scania scania = new Scania(new Point2D.Double(200, 200));
+        carModel.vehicles.add(new Volvo240(new Point2D.Double(0, 0)));
+        carModel.vehicles.add(new Saab95(new Point2D.Double(0, 100)));
+        carModel.vehicles.add(new Scania(new Point2D.Double(0, 200)));
 
-        carModel.vehicles.add(volvo);
-        carModel.vehicles.add(saab);
-        carModel.vehicles.add(scania);
+        carModel.addObserver(carView.getDrawPanel());
+        carView.getControlPanel().addCarControlListener(carController);
 
-        new CarController(carModel, carView);
         carModel.startTimer(50);
     }
 }
