@@ -1,3 +1,7 @@
+package org.example;
+
+import org.example.vehicle.Vehicle;
+
 import java.util.List;
 
 public class CarStatus {

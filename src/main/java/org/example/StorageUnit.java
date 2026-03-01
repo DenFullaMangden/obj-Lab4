@@ -1,3 +1,5 @@
+package org.example;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ public abstract class StorageUnit<T extends Storable> implements Storage<T> {
         @Override
         public void load(T item) {
             if (isFull()) {
-                throw new IllegalStateException("Storage is full.");
+                throw new IllegalStateException("org.example.Storage is full.");
             }
             if (item.isStored()) {
                 throw new IllegalStateException("Item is already stored.");
@@ -31,7 +33,7 @@ public abstract class StorageUnit<T extends Storable> implements Storage<T> {
         @Override
         public T unload() {
             if (isEmpty()) {
-                throw new IllegalStateException("Storage is empty.");
+                throw new IllegalStateException("org.example.Storage is empty.");
             }
             T item = storage.removeLast();
             item.unStore();

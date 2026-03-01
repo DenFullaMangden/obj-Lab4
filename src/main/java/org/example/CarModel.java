@@ -1,3 +1,8 @@
+package org.example;
+
+import org.example.vehicle.Saab95;
+import org.example.vehicle.Vehicle;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

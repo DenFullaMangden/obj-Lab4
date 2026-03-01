@@ -1,19 +1,34 @@
+package org.example.vehicle;
+
 import java.awt.*;
+import java.awt.geom.Point2D;
+import org.example.*;
 
-public class Volvo240 extends Vehicle implements SmallCar {
+public class Saab95 extends Vehicle implements SmallCar, Turbo {
 
-    private final double trimFactor = 1.25;
+    private boolean turboOn;
     private boolean isStored;
     private Storage<?> currentStorage;
 
-    public Volvo240() {
-        super(4, Color.black, 100, "Volvo 240");
+    public Saab95(Point2D.Double position) {
+        super(2, Color.red, 125, "Saab 95", position);
+        this.turboOn = false;
         this.unStore();
+    }
+    
+    public void setTurboOn() {
+	    this.turboOn = true;
+    }
+
+    public void setTurboOff() {
+	    this.turboOn = false;
     }
 
     @Override
     protected double speedFactor() {
-        return this.getEnginePower() * 0.01 * this.trimFactor;
+        double turbo = 1;
+        if (this.turboOn) turbo = 1.3;
+        return this.getEnginePower() * 0.01 * turbo;
     }
 
     @Override

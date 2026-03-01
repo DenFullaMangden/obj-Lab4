@@ -1,20 +1,20 @@
-import java.awt.*;
+package org.example;
+
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public class WorkShop<T extends Storable>  {
 
-    private StorageUnit<T> carBed;
-    private Point2D.Double position;
+    private final StorageUnit<T> carBed;
+    private final Point2D.Double position;
 
-    public WorkShop(int capacity, double x, double y) {
+    public WorkShop(int capacity, Point2D.Double position) {
         this.carBed = new StorageUnit<T>(capacity) {
             @Override
             public Point2D.Double getPosition() {
                 return WorkShop.this.getPosition();
             }
         };
-        this.position = new Point2D.Double(x,y);
+        this.position = position;
     }
 
     public Point2D.Double getPosition() {

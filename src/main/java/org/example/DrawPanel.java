@@ -1,8 +1,15 @@
+package org.example;
+
+import org.example.vehicle.Saab95;
+import org.example.vehicle.Scania;
+import org.example.vehicle.Vehicle;
+import org.example.vehicle.Volvo240;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List; // Added this import
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -24,10 +31,10 @@ public class DrawPanel extends JPanel implements CarObserver {
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
         try {
-            this.volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-            this.saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
-            this.scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
-            this.volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            this.volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg"));
+            this.saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Saab95.jpg"));
+            this.scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Scania.jpg"));
+            this.volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
         } catch (IOException ex)
         {
             ex.printStackTrace();

@@ -1,3 +1,5 @@
+package org.example;
+
 import java.awt.geom.Point2D;
 
 public interface Storage<T extends Storable> {

@@ -1,3 +1,5 @@
+package org.example;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,10 +15,12 @@ public class ControlPanel extends JPanel {
     public JButton brakeButton = new JButton("Brake");
     public JButton turboOnButton = new JButton("Turbo on");
     public JButton turboOffButton = new JButton("Turbo off");
-    public JButton liftBedButton = new JButton("Raise Lift Bed");
-    public JButton lowerBedButton = new JButton("Lower Lift Bed");
+    public JButton liftBedButton = new JButton("<html>Lift<br />bed</html>");
+    public JButton lowerBedButton = new JButton("<html>Lower<br />bed</html>");
     public JButton startButton = new JButton("Start all cars");
     public JButton stopButton = new JButton("Stop all cars");
+    public JButton addCarButton = new JButton("<html>Add<br />car</html>");
+    public JButton removeCarButton = new JButton("<html>Remove<br />car</html>");
 
     public ControlPanel(int X) {
         this.X = X;
@@ -39,9 +43,12 @@ public class ControlPanel extends JPanel {
         buttonPanel.add(gasButton, 0);
         buttonPanel.add(turboOnButton, 1);
         buttonPanel.add(liftBedButton, 2);
-        buttonPanel.add(brakeButton, 3);
-        buttonPanel.add(turboOffButton, 4);
-        buttonPanel.add(lowerBedButton, 5);
+        buttonPanel.add(addCarButton, 3);
+        buttonPanel.add(brakeButton, 4);
+        buttonPanel.add(turboOffButton, 5);
+        buttonPanel.add(lowerBedButton, 6);
+        buttonPanel.add(removeCarButton, 7);
+
         buttonPanel.setPreferredSize(new Dimension((X / 2) + 4, 200));
         buttonPanel.setBackground(Color.CYAN);
 

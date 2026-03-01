@@ -1,15 +1,17 @@
+package org.example.vehicle;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import org.example.*;
 
-public class Ferry extends Vehicle implements Ramp{
+public class Ferry extends Vehicle implements Ramp {
 
     private StorageUnit<SmallCar> carBed;
     private StorageUnit<BigCar> truckBed;
     private boolean rampUp;
 
-    public Ferry(int capacity) {
-        super(20, Color.blue, 75, "Ferry");
+    public Ferry(int capacity, Point2D.Double position) {
+        super(20, Color.blue, 75, "org.vehicle.example.Ferry", position);
         this.setRampUp();
 
         this.carBed = new StorageUnit<SmallCar>(capacity) {
@@ -35,7 +37,7 @@ public class Ferry extends Vehicle implements Ramp{
     @Override
     public void setRampUp() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
         }
         this.rampUp = true;
     }
@@ -43,7 +45,7 @@ public class Ferry extends Vehicle implements Ramp{
     @Override
     public void setRampDown() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while vehicle is moving!");
+            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
         }
         this.rampUp = false;
     }

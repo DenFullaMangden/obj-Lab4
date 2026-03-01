@@ -1,3 +1,5 @@
+package org.example;
+
 public interface Storable {
     boolean isStored();
     void unStore();

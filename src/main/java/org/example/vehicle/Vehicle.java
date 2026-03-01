@@ -1,5 +1,9 @@
+package org.example.vehicle;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
+import org.example.Movable;
+import org.example.Direction;
 
 public abstract class Vehicle implements Movable {
 
@@ -12,12 +16,12 @@ public abstract class Vehicle implements Movable {
     private Direction direction;
     private boolean engineOn;
 
-    public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
+    public Vehicle(int nrDoors, Color color, double enginePower, String modelName, Point2D.Double position) {
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
         this.modelName = modelName;
-        this.position = new Point2D.Double();
+        this.position = position;
         this.direction = Direction.EAST;
         this.stopEngine();
     }
