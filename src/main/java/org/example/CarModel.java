@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarModel {
+public class CarModel implements CarModelInterface{
 
     private int delay;
     private Timer timer = new Timer(delay, new TimerListener());
@@ -21,41 +21,47 @@ public class CarModel {
         this.timer.start();
     }
 
-    void gas(int amount) {
+    @Override
+    public void gas(int amount) {
         double gas = ((double) amount/100);
         for (Vehicle vehicle : vehicles) {
             vehicle.gas(gas);
         }
     }
 
-    void brake(int amount) {
+    @Override
+    public void brake(int amount) {
         double brake = ((double) amount/100);
         for (Vehicle vehicle : vehicles) {
             vehicle.brake(brake);
         }
     }
 
-    void start() {
+    @Override
+    public void start() {
         for (Vehicle vehicle : vehicles) {
             vehicle.startEngine();
         }
     }
 
-    void stop() {
+    @Override
+    public void stop() {
         for (Vehicle vehicle : vehicles) {
             vehicle.stopEngine();
         }
     }
 
-    void setTurboOn() {
+    @Override
+    public void setTurboOn() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95) {
+            if (vehicle instanceof Turbo) {
                 ((Saab95) vehicle).setTurboOn();
             }
         }
     }
 
-    void setTurboOff() {
+    @Override
+    public void setTurboOff() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Turbo) {
                 ((Turbo) vehicle).setTurboOff();
@@ -63,7 +69,8 @@ public class CarModel {
         }
     }
 
-    void liftBed() {
+    @Override
+    public void liftBed() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Ramp) {
                 ((Ramp) vehicle).setRampUp();
@@ -71,12 +78,23 @@ public class CarModel {
         }
     }
 
-    void lowerBed() {
+    @Override
+    public void lowerBed() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Ramp) {
                 ((Ramp) vehicle).setRampDown();
             }
         }
+    }
+
+    @Override
+    public void addVehicle() {
+
+    }
+
+    @Override
+    public void removeVehicle() {
+
     }
 
     public void addObserver(CarObserver observer){

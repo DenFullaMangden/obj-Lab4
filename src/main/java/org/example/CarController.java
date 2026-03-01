@@ -1,9 +1,9 @@
 package org.example;
 
 public class CarController implements CarControlListener {
-    private CarModel model;
+    private CarModelInterface model;
 
-    public CarController(CarModel model) {
+    public CarController(CarModelInterface model) {
         this.model = model;
     }
 
