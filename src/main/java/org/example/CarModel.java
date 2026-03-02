@@ -141,7 +141,7 @@ public class CarModel implements CarModelInterface{
                 Class<?> type = loader.getCarType();
                 for (Vehicle vehicle : vehicles) {
                     if (type.isInstance(vehicle)) {
-                        loader.tryToload((SmallCar) vehicle);
+                        loader.tryToLoad((SmallCar) vehicle);
                     }
                 }
             }

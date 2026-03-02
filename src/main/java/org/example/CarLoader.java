@@ -1,7 +1,7 @@
 package org.example;
 
 public interface CarLoader<T extends SmallCar> {
-    void tryToload(SmallCar car);
+    void tryToLoad(SmallCar car);
 
     Class<T> getCarType();
 }

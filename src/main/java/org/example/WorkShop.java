@@ -49,7 +49,7 @@ public class WorkShop<T extends SmallCar> implements CarLoader<T> {
     }
 
     @Override
-    public void tryToload(SmallCar car) {
+    public void tryToLoad(SmallCar car) {
         if (!this.getCarType().isInstance(car) || this.getPosition().distance(car.getPosition()) > 20 ||
             car.isStored()) {
             return;
