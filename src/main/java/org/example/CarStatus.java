@@ -10,7 +10,7 @@ public class CarStatus {
     private final List<Vehicle> vehicles;
 
     public CarStatus(List<Vehicle> vehicles) {
-        this.vehicles = Collections.unmodifiableList(new ArrayList<>(vehicles));
+        this.vehicles = List.copyOf(vehicles);
     }
 
     public List<Vehicle> getVehicles() {
