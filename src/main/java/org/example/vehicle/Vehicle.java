@@ -50,11 +50,12 @@ public abstract class Vehicle implements Movable {
         return this.direction;
     }
 
+    @Override
     public Point2D.Double getPosition() {
         return this.position;
     }
 
-    public boolean getEngineON() {
+    public boolean getEngineOn() {
         return engineOn;
     }
 

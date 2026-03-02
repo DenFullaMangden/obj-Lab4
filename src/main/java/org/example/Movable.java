@@ -1,5 +1,7 @@
 package org.example;
 
+import java.awt.geom.Point2D;
+
 public interface Movable {
 
 	void move();
@@ -7,4 +9,6 @@ public interface Movable {
 	void turnLeft();
 
 	void turnRight();
+
+	Point2D getPosition();
 }

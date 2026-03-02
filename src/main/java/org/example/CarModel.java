@@ -1,13 +1,12 @@
 package org.example;
 
-import org.example.vehicle.Saab95;
-import org.example.vehicle.Vehicle;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import org.example.vehicle.Vehicle;
+import org.example.vehicle.RandomVehicleFactory;
 
 public class CarModel implements CarModelInterface{
 
@@ -16,6 +15,7 @@ public class CarModel implements CarModelInterface{
     private int height;
     private Timer timer;
     public final List<Vehicle> vehicles = new ArrayList<Vehicle>();
+    public final List<CarLoader> carLoaders = new ArrayList<CarLoader>();
     private final List<CarObserver> observers = new ArrayList<CarObserver>();
 
     public void startTimer(int delay, int height, int width) {
@@ -28,7 +28,7 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void gas(int amount) {
-        double gas = ((double) amount/100);
+        double gas = ((double) amount/(this.delay*2));
         for (Vehicle vehicle : vehicles) {
             vehicle.gas(gas);
         }
@@ -36,16 +36,18 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void brake(int amount) {
-        double brake = ((double) amount/100);
+        double brake = ((double) amount/(this.delay*2));
         for (Vehicle vehicle : this.vehicles) {
             vehicle.brake(brake);
-        }
+            }
     }
 
     @Override
     public void start() {
         for (Vehicle vehicle : this.vehicles) {
-            vehicle.startEngine();
+            if (!vehicle.getEngineOn()) {
+                vehicle.startEngine();
+            }
         }
     }
 
@@ -60,7 +62,7 @@ public class CarModel implements CarModelInterface{
     public void setTurboOn() {
         for (Vehicle vehicle : this.vehicles) {
             if (vehicle instanceof Turbo) {
-                ((Saab95) vehicle).setTurboOn();
+                ((Turbo) vehicle).setTurboOn();
             }
         }
     }
@@ -94,13 +96,18 @@ public class CarModel implements CarModelInterface{
 
     @Override
     public void addVehicle() {
-
+        if (this.vehicles.size() < 10) {
+            Vehicle car = RandomVehicleFactory.createRandomVehicle(this.width-100, this.height-60);
+            this.vehicles.add(car);
+            this.multicastStatusChange(new CarStatus(this.vehicles));
+        }
     }
 
     @Override
     public void removeVehicle() {
         if (!this.vehicles.isEmpty()) {
             this.vehicles.removeLast();
+            this.multicastStatusChange(new CarStatus(this.vehicles));
         }
     }
 
@@ -118,11 +125,8 @@ public class CarModel implements CarModelInterface{
     }
 
     private class TimerListener implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
             for (Vehicle vehicle : CarModel.this.vehicles) {
-                vehicle.move();
-                // System.out.println(vehicle.getPosition());
 
                 int x = (int) Math.round(vehicle.getPosition().getX());
                 int y = (int) Math.round(vehicle.getPosition().getY());
@@ -130,9 +134,19 @@ public class CarModel implements CarModelInterface{
                     vehicle.turnLeft();
                     vehicle.turnLeft();
                 }
+                vehicle.move();
             }
+
+            for (CarLoader<?> loader : CarModel.this.carLoaders) {
+                Class<?> type = loader.getCarType();
+                for (Vehicle vehicle : vehicles) {
+                    if (type.isInstance(vehicle)) {
+                        loader.tryToload((SmallCar) vehicle);
+                    }
+                }
+            }
+
             multicastStatusChange(new CarStatus(CarModel.this.vehicles));
         }
     }
-
 }

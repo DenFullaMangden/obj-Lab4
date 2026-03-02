@@ -23,16 +23,14 @@ public class Scania extends Vehicle implements BigCar, Ramp {
 
     @Override
     public boolean getRampUp() {
-        if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
-        }
         return this.rampUp;
     }
 
     @Override
     public void setRampUp() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
+            System.out.println("Cannot change ramp angle while example.vehicle is moving!");
+            return;
         }
         this.setRampAngle(0);
         this.rampUp = true;
@@ -41,7 +39,8 @@ public class Scania extends Vehicle implements BigCar, Ramp {
     @Override
     public void setRampDown() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
+            System.out.println("Cannot change ramp angle while example.vehicle is moving!");
+            return;
         }
         this.setRampAngle(70);
         this.rampUp = false;
@@ -49,32 +48,31 @@ public class Scania extends Vehicle implements BigCar, Ramp {
 
     public void setRampAngle(double angle) {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
+            System.out.println("Cannot change ramp angle while example.vehicle is moving!");
+            return;
         }
         if (angle < 0 || angle > 70) {
-            throw new IllegalArgumentException("org.example.Ramp angle must be between 0 and 70 degrees.");
+            System.out.println("Ramp angle must be between 0 and 70 degrees.");
+            return;
         }
         this.rampAngle = angle;
-        if (angle == 0) {
-            this.rampUp = true;
-        }
-        else {
-            this.rampUp = false;
-        }
+        this.rampUp = angle == 0;
     }
 
     @Override
     public void startEngine() {
-        if (!this.rampUp) {
-            throw new IllegalStateException("Cannot start engine while ramp is down!");
+        if (!this.getRampUp()) {
+            System.out.println("Cannot start engine while ramp is down!");
+            return;
         }
         super.startEngine();
     }
 
     @Override
     public void gas(double amount) {
-        if (!this.rampUp) {
-            throw new IllegalStateException("Cannot accelerate while ramp is down!");
+        if (!this.getRampUp()) {
+            System.out.println("Cannot gas while ramp is down!");
+            return;
         }
         super.gas(amount);
     }

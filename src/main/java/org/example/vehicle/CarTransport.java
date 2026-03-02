@@ -33,7 +33,7 @@ public class CarTransport extends Vehicle implements BigCar, Ramp {
     @Override
     public void setRampUp() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
+            System.out.println("Cannot raise ramp while transport is moving!");
         }
         this.rampUp = true;
     }
@@ -41,16 +41,50 @@ public class CarTransport extends Vehicle implements BigCar, Ramp {
     @Override
     public void setRampDown() {
         if (this.getCurrentSpeed() > 0) {
-            throw new IllegalStateException("Cannot change ramp angle while example.vehicle is moving!");
+            System.out.println("Cannot lower ramp while transport is moving!");
         }
         this.rampUp = false;
     }
 
+    @Override
+    public void startEngine() {
+        if (!this.getRampUp()) {
+            System.out.println("Cannot start engine while ramp is down!");
+            return;
+        }
+        super.startEngine();
+    }
+
+    @Override
+    public void gas(double amount) {
+        if (!this.getRampUp()) {
+            System.out.println("Cannot gas while ramp is down!");
+            return;
+        }
+        super.gas(amount);
+    }
+
     public void load(SmallCar car) {
+        if (this.getRampUp()) {
+            System.out.println("Cannot load while ramp is up!");
+            return;
+        }
+        if (this.getCurrentSpeed() > 0) {
+            System.out.println("Cannot load while moving!");
+            return;
+        }
         this.carBed.load(car);
     }
 
     public SmallCar unload() {
+        if (this.getRampUp()) {
+            System.out.println("Cannot unload while ramp is up!");
+            return null;
+        }
+        if (this.getCurrentSpeed() > 0) {
+            System.out.println("Cannot unload while moving!");
+            return null;
+        }
         return this.carBed.unload();
     }
 
