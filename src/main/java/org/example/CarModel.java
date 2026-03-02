@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import org.example.vehicle.Vehicle;
 import org.example.vehicle.RandomVehicleFactory;
 
 public class CarModel implements CarModelInterface{
@@ -14,7 +13,7 @@ public class CarModel implements CarModelInterface{
     private int width;
     private int height;
     private Timer timer;
-    public final List<Vehicle> vehicles = new ArrayList<Vehicle>();
+    public final List<Drivable> drivables = new ArrayList<Drivable>();
     public final List<CarLoader<?>> carLoaders = new ArrayList<CarLoader<?>>();
     private final List<CarObserver> observers = new ArrayList<CarObserver>();
 
@@ -29,85 +28,85 @@ public class CarModel implements CarModelInterface{
     @Override
     public void gas(int amount) {
         double gas = ((double) amount/(this.delay*2));
-        for (Vehicle vehicle : vehicles) {
-            vehicle.gas(gas);
+        for (Drivable drivable : drivables) {
+            drivable.gas(gas);
         }
     }
 
     @Override
     public void brake(int amount) {
         double brake = ((double) amount/(this.delay*2));
-        for (Vehicle vehicle : this.vehicles) {
-            vehicle.brake(brake);
+        for (Drivable drivable : this.drivables) {
+            drivable.brake(brake);
             }
     }
 
     @Override
     public void start() {
-        for (Vehicle vehicle : this.vehicles) {
-            if (!vehicle.getEngineOn()) {
-                vehicle.startEngine();
+        for (Drivable drivable : this.drivables) {
+            if (!drivable.getEngineOn()) {
+                drivable.startEngine();
             }
         }
     }
 
     @Override
     public void stop() {
-        for (Vehicle vehicle : this.vehicles) {
-            vehicle.stopEngine();
+        for (Drivable drivable : this.drivables) {
+            drivable.stopEngine();
         }
     }
 
     @Override
     public void setTurboOn() {
-        for (Vehicle vehicle : this.vehicles) {
-            if (vehicle instanceof Turbo) {
-                ((Turbo) vehicle).setTurboOn();
+        for (Drivable drivable : this.drivables) {
+            if (drivable instanceof Turbo) {
+                ((Turbo) drivable).setTurboOn();
             }
         }
     }
 
     @Override
     public void setTurboOff() {
-        for (Vehicle vehicle : this.vehicles) {
-            if (vehicle instanceof Turbo) {
-                ((Turbo) vehicle).setTurboOff();
+        for (Drivable drivable : this.drivables) {
+            if (drivable instanceof Turbo) {
+                ((Turbo) drivable).setTurboOff();
             }
         }
     }
 
     @Override
     public void liftBed() {
-        for (Vehicle vehicle : this.vehicles) {
-            if (vehicle instanceof Ramp) {
-                ((Ramp) vehicle).setRampUp();
+        for (Drivable drivable : this.drivables) {
+            if (drivable instanceof Ramp) {
+                ((Ramp) drivable).setRampUp();
             }
         }
     }
 
     @Override
     public void lowerBed() {
-        for (Vehicle vehicle : this.vehicles) {
-            if (vehicle instanceof Ramp) {
-                ((Ramp) vehicle).setRampDown();
+        for (Drivable drivable : this.drivables) {
+            if (drivable instanceof Ramp) {
+                ((Ramp) drivable).setRampDown();
             }
         }
     }
 
     @Override
     public void addVehicle() {
-        if (this.vehicles.size() < 10) {
-            Vehicle car = RandomVehicleFactory.createRandomVehicle(this.width-100, this.height-60);
-            this.vehicles.add(car);
-            this.multicastStatusChange(new CarStatus(this.vehicles));
+        if (this.drivables.size() < 10) {
+            Drivable car = RandomVehicleFactory.createRandomVehicle(this.width-100, this.height-60);
+            this.drivables.add(car);
+            this.multicastStatusChange(new CarStatus(this.drivables));
         }
     }
 
     @Override
     public void removeVehicle() {
-        if (!this.vehicles.isEmpty()) {
-            this.vehicles.removeLast();
-            this.multicastStatusChange(new CarStatus(this.vehicles));
+        if (!this.drivables.isEmpty()) {
+            this.drivables.removeLast();
+            this.multicastStatusChange(new CarStatus(this.drivables));
         }
     }
 
@@ -126,27 +125,27 @@ public class CarModel implements CarModelInterface{
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : CarModel.this.vehicles) {
+            for (Drivable drivable : CarModel.this.drivables) {
 
-                int x = (int) Math.round(vehicle.getPosition().getX());
-                int y = (int) Math.round(vehicle.getPosition().getY());
+                int x = (int) Math.round(drivable.getPosition().getX());
+                int y = (int) Math.round(drivable.getPosition().getY());
                 if (x > (CarModel.this.width-100) || x < 0 || y > (CarModel.this.height-60) || y < 0) {
-                    vehicle.turnLeft();
-                    vehicle.turnLeft();
+                    drivable.turnLeft();
+                    drivable.turnLeft();
                 }
-                vehicle.move();
+                drivable.move();
             }
 
             for (CarLoader<?> loader : CarModel.this.carLoaders) {
                 Class<?> type = loader.getCarType();
-                for (Vehicle vehicle : vehicles) {
-                    if (type.isInstance(vehicle)) {
-                        loader.tryToLoad((SmallCar) vehicle);
+                for (Drivable drivable : drivables) {
+                    if (type.isInstance(drivable)) {
+                        loader.tryToLoad((SmallCar) drivable);
                     }
                 }
             }
 
-            multicastStatusChange(new CarStatus(CarModel.this.vehicles));
+            multicastStatusChange(new CarStatus(CarModel.this.drivables));
         }
     }
 }

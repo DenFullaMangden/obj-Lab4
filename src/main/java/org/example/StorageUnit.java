@@ -21,7 +21,7 @@ public abstract class StorageUnit<T extends Storable> implements Storage<T> {
         @Override
         public void load(T item) {
             if (isFull()) {
-                throw new IllegalStateException("org.example.Storage is full.");
+                throw new IllegalStateException("Storage is full.");
             }
             if (item.isStored()) {
                 throw new IllegalStateException("Item is already stored.");
@@ -33,7 +33,7 @@ public abstract class StorageUnit<T extends Storable> implements Storage<T> {
         @Override
         public T unload() {
             if (isEmpty()) {
-                throw new IllegalStateException("org.example.Storage is empty.");
+                throw new IllegalStateException("Storage is empty.");
             }
             T item = storage.removeLast();
             item.unStore();

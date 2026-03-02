@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.vehicle.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel implements CarObserver {
 
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Drivable> vehicles = new ArrayList<>();
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
@@ -42,7 +41,7 @@ public class DrawPanel extends JPanel implements CarObserver {
         super.paintComponent(g);
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
 
-        for (Vehicle vehicle : vehicles) {
+        for (Drivable vehicle : vehicles) {
             int x = (int) Math.round(vehicle.getPosition().getX());
             int y = (int) Math.round(vehicle.getPosition().getY());
 

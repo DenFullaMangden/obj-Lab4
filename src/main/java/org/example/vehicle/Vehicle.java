@@ -2,10 +2,12 @@ package org.example.vehicle;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+
+import org.example.Drivable;
 import org.example.Movable;
 import org.example.Direction;
 
-public abstract class Vehicle implements Movable {
+public abstract class Vehicle implements Drivable {
 
     private int nrDoors;
     private double enginePower;
@@ -34,6 +36,7 @@ public abstract class Vehicle implements Movable {
         return this.enginePower;
     }
 
+    @Override
     public double getCurrentSpeed() {
         return this.currentSpeed;
     }
@@ -55,6 +58,7 @@ public abstract class Vehicle implements Movable {
         return this.position;
     }
 
+    @Override
     public boolean getEngineOn() {
         return engineOn;
     }
@@ -63,11 +67,13 @@ public abstract class Vehicle implements Movable {
 	    color = clr;
     }
 
+    @Override
     public void startEngine() {
 	    this.currentSpeed = 0.1;
         this.engineOn = true;
     }
 
+    @Override
     public void stopEngine() {
 	    this.currentSpeed = 0;
         this.engineOn = false;
@@ -89,6 +95,7 @@ public abstract class Vehicle implements Movable {
         this.position = new Point2D.Double(position.getX(), position.getY());
     }
 
+    @Override
     public void gas(double amount) {
         if (amount > 100 || amount < 0 || !this.engineOn) {
             System.out.println("Amount must be between 0 and 100 and the engine must be started.");
@@ -97,6 +104,7 @@ public abstract class Vehicle implements Movable {
         this.incrementSpeed(amount);
     }
 
+    @Override
     public void brake(double amount) {
         if (amount > 100 || amount < 0) {
             System.out.println("Amount must be between 0 and 100");

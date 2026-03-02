@@ -13,9 +13,9 @@ public class Application {
         CarView carView = new CarView("CarSim 7.0", 800, 800);
         CarController carController = new CarController(carModel);
 
-        carModel.vehicles.add(new Saab95(new Point2D.Double(0, 100)));
-        carModel.vehicles.add(new Scania(new Point2D.Double(0, 200)));
-        carModel.vehicles.add(new Volvo240(new Point2D.Double(0, 300)));
+        carModel.drivables.add(new Saab95(new Point2D.Double(0, 100)));
+        carModel.drivables.add(new Scania(new Point2D.Double(0, 200)));
+        carModel.drivables.add(new Volvo240(new Point2D.Double(0, 300)));
         carModel.carLoaders.add(new WorkShop<Volvo240>(Volvo240.class,10,new Point2D.Double(300, 300)));
 
         carModel.addObserver(carView.getDrawPanel());
