@@ -117,6 +117,7 @@ public class CarModel implements CarModelInterface{
     public void removeObserver(CarObserver observer){
         observers.remove(observer);
     }
+
     private void multicastStatusChange(CarStatus newStatus){
         for (CarObserver observer : observers){
             observer.actOnStatusChange(newStatus);

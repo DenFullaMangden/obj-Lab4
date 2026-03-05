@@ -11,7 +11,7 @@ public class Ferry extends Vehicle implements Ramp {
     private boolean rampUp;
 
     public Ferry(int capacity, Point2D.Double position) {
-        super(20, Color.blue, 75, "org.vehicle.example.Ferry", position);
+        super(20, Color.blue, 75, "Ferry", position);
         this.setRampUp();
 
         this.carBed = new StorageUnit<SmallCar>(capacity) {

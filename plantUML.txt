@@ -1,0 +1,279 @@
+@startuml CarSimulation_Complete_Architecture
+
+' --- Settings for better layout ---
+skinparam linetype ortho
+skinparam packageStyle rectangle
+title Car Simulation - Complete Class Diagram
+
+' ==========================================
+' PACKAGE: org.example (Core Logic & MVC)
+' ==========================================
+package "org.example (Core & MVC)" {
+
+    class Application {
+        + {static} main(args: String[])
+    }
+
+    interface CarModelInterface {
+        + gas(amount: int)
+        + brake(amount: int)
+        + start()
+        + stop()
+        + setTurboOn()
+        + setTurboOff()
+        + liftBed()
+        + lowerBed()
+        + addVehicle()
+        + removeVehicle()
+        + addObserver(observer: CarObserver)
+    }
+
+    class CarModel {
+        - delay: int
+        - width: int
+        - height: int
+        - timer: Timer
+        + drivables: List<Drivable>
+        + carLoaders: List<CarLoader<?>>
+        - observers: List<CarObserver>
+        + startTimer(delay, height, width)
+        - multicastStatusChange(status: CarStatus)
+    }
+
+    class CarController {
+        - model: CarModelInterface
+    }
+
+    interface CarControlListener {
+        + gas(amount: int)
+        + brake(amount: int)
+        + start()
+        + stop()
+        + setTurboOn()
+        + setTurboOff()
+        + liftBed()
+        + lowerBed()
+        + addCar()
+        + removeCar()
+    }
+
+    class CarView {
+        - drawPanel: DrawPanel
+        - controlPanel: ControlPanel
+        + getDrawPanel(): DrawPanel
+        + getControlPanel(): ControlPanel
+    }
+
+    class ControlPanel {
+        - carControlListener: CarControlListener
+        + gasSpinner: JSpinner
+        + gasButton: JButton
+        + brakeButton: JButton
+        - initButtons()
+        - initListeners()
+    }
+
+    class DrawPanel {
+        - vehicles: List<Drivable>
+        - volvoImage: BufferedImage
+        - saabImage: BufferedImage
+        # paintComponent(g: Graphics)
+    }
+
+    interface CarObserver {
+        + actOnStatusChange(status: CarStatus)
+    }
+
+    class CarStatus {
+        - vehicles: List<Drivable>
+        + getVehicles(): List<Drivable>
+    }
+
+    enum Direction {
+        NORTH
+        EAST
+        SOUTH
+        WEST
+        + turnLeft(): Direction
+        + turnRight(): Direction
+        + toPointVector(): Point2D.Double
+    }
+}
+
+' ==========================================
+' PACKAGE: org.example (Interfaces & Storage)
+' ==========================================
+package "org.example (Interfaces & Infrastructure)" {
+    interface Positionable {
+        + getPosition(): Point2D.Double
+    }
+
+    interface Movable {
+        + move()
+        + turnLeft()
+        + turnRight()
+    }
+
+    interface Drivable {
+        + getCurrentSpeed(): double
+        + getEngineOn(): boolean
+        + startEngine()
+        + stopEngine()
+        + gas(amount: double)
+        + brake(amount: double)
+    }
+
+    interface Storable {
+        + isStored(): boolean
+        + unStore()
+        + store(storage: Storage)
+    }
+
+    interface SmallCar
+    interface BigCar
+
+    interface Turbo {
+        + setTurboOn()
+        + setTurboOff()
+    }
+
+    interface Ramp {
+        + setRampUp()
+        + setRampDown()
+        + getRampUp(): boolean
+    }
+
+    interface Storage<T extends Storable> {
+        + load(item: T)
+        + unload(): T
+        + isEmpty(): boolean
+        + isFull(): boolean
+    }
+
+    abstract class StorageUnit<T extends Storable> {
+        - capacity: int
+        - storage: ArrayList<T>
+    }
+
+    interface CarLoader<T extends SmallCar> {
+        + tryToLoad(car: SmallCar)
+        + getCarType(): Class<T>
+    }
+
+    class WorkShop<T extends SmallCar> {
+        - carType: Class<T>
+        - carBed: StorageUnit<T>
+        - position: Point2D.Double
+    }
+}
+
+' ==========================================
+' PACKAGE: org.example.vehicle (Implementations)
+' ==========================================
+package "org.example.vehicle" {
+    abstract class Vehicle {
+        - nrDoors: int
+        - enginePower: double
+        - currentSpeed: double
+        - color: Color
+        - modelName: String
+        - position: Point2D.Double
+        - direction: Direction
+        - engineOn: boolean
+        # speedFactor(): double
+    }
+
+    class Saab95 {
+        - turboOn: boolean
+        - isStored: boolean
+    }
+
+    class Volvo240 {
+        - trimFactor: double
+        - isStored: boolean
+    }
+
+    class Scania {
+        - rampAngle: double
+        - rampUp: boolean
+        - isStored: boolean
+    }
+
+    class CarTransport {
+        - carBed: StorageUnit<SmallCar>
+        - rampUp: boolean
+    }
+
+    class Ferry {
+        - carBed: StorageUnit<SmallCar>
+        - truckBed: StorageUnit<BigCar>
+        - rampUp: boolean
+    }
+
+    class RandomVehicleFactory {
+        + {static} createRandomVehicle(maxWidth, maxHeight): Vehicle
+    }
+}
+
+' ==========================================
+' RELATIONSHIPS (The Glue)
+' ==========================================
+
+' MVC Wiring
+Application ..> CarModel : initializes
+Application ..> CarView : initializes
+Application ..> CarController : initializes
+
+CarModelInterface <|.. CarModel
+CarControlListener <|.. CarController
+CarController o-- CarModelInterface
+
+CarView *-- DrawPanel
+CarView *-- ControlPanel
+ControlPanel o-- CarControlListener
+CarObserver <|.. DrawPanel
+CarModel o-- CarObserver : notifies
+CarModel o-- CarStatus : sends
+
+
+' Interface Hierarchy
+Movable --|> Positionable
+Drivable --|> Movable
+Storable --|> Positionable
+SmallCar --|> Storable
+BigCar --|> Storable
+Storage --|> Positionable
+
+' Storage Logic
+StorageUnit ..|> Storage
+WorkShop ..|> CarLoader
+WorkShop *-- StorageUnit
+
+' Vehicle Implementation
+Vehicle ..|> Drivable
+Vehicle o-- Direction
+
+Saab95 --|> Vehicle
+Saab95 ..|> SmallCar
+Saab95 ..|> Turbo
+
+Volvo240 --|> Vehicle
+Volvo240 ..|> SmallCar
+
+Scania --|> Vehicle
+Scania ..|> BigCar
+Scania ..|> Ramp
+
+CarTransport --|> Vehicle
+CarTransport ..|> BigCar
+CarTransport ..|> Ramp
+CarTransport *-- StorageUnit : contains
+
+Ferry --|> Vehicle
+Ferry ..|> Ramp
+Ferry *-- StorageUnit : contains
+
+' Factory
+RandomVehicleFactory ..> Vehicle : creates
+
+@enduml

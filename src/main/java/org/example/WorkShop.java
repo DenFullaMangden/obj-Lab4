@@ -2,9 +2,9 @@ package org.example;
 
 import java.awt.geom.Point2D;
 
-public class WorkShop<T extends SmallCar> implements CarLoader<T> {
+public class WorkShop<T extends SmallCar> implements CarLoader<T>, Positionable {
     private final Class<T> carType;
-    private final StorageUnit<T> carBed;
+    private final Storage<T> carBed;
     private final Point2D.Double position;
 
     public WorkShop(Class<T> carType, int capacity, Point2D.Double position) {

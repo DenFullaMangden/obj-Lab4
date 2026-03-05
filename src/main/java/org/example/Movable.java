@@ -2,7 +2,7 @@ package org.example;
 
 import java.awt.geom.Point2D;
 
-public interface Movable {
+public interface Movable extends Positionable{
 
 	void move();
 
@@ -10,5 +10,4 @@ public interface Movable {
 
 	void turnRight();
 
-	Point2D getPosition();
 }
