@@ -1,16 +1,21 @@
 package org.example;
 
-import org.example.vehicle.Vehicle;
 import java.util.List;
 
 public class CarStatus {
-    private final List<Drivable> vehicles;
+    private final List<Drivable> drivables;
+    private final List<LoadChecker<?>> loadCheckers;
 
-    public CarStatus(List<Drivable> vehicles) {
-        this.vehicles = List.copyOf(vehicles);
+    public CarStatus(List<Drivable> drivables, List<LoadChecker<?>> loadCheckers) {
+        this.drivables = List.copyOf(drivables);
+        this.loadCheckers = List.copyOf(loadCheckers);
     }
 
-    public List<Drivable> getVehicles() {
-        return vehicles;
+    public List<Drivable> getDrivables() {
+        return drivables;
+    }
+
+    public List<LoadChecker<?>> getLoadCheckers() {
+        return loadCheckers;
     }
 }

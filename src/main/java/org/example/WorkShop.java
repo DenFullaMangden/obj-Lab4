@@ -2,7 +2,7 @@ package org.example;
 
 import java.awt.geom.Point2D;
 
-public class WorkShop<T extends SmallCar> implements CarLoader<T>, Positionable {
+public class WorkShop<T extends SmallCar> implements LoadChecker<T>, Positionable {
     private final Class<T> carType;
     private final Storage<T> carBed;
     private final Point2D.Double position;
@@ -44,18 +44,18 @@ public class WorkShop<T extends SmallCar> implements CarLoader<T>, Positionable 
     }
 
     @Override
-    public Class<T> getCarType() {
+    public Class<T> GetStorableType() {
         return carType;
     }
 
     @Override
-    public void tryToLoad(SmallCar car) {
-        if (!this.getCarType().isInstance(car) || this.getPosition().distance(car.getPosition()) > 20 ||
-            car.isStored()) {
+    public void tryToLoad(Storable storable) {
+        if (!this.GetStorableType().isInstance(storable) || this.getPosition().distance(storable.getPosition()) > 20 ||
+            storable.isStored()) {
             return;
         }
         else {
-            this.load(this.getCarType().cast(car));
+            this.load(this.GetStorableType().cast(storable));
         }
     }
 }

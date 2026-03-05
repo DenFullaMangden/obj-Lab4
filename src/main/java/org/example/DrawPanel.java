@@ -12,7 +12,9 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel implements CarObserver {
 
-    private List<Drivable> vehicles = new ArrayList<>();
+    private List<Drivable> drivables = new ArrayList<>();
+    private List<LoadChecker<?>> loadCheckers = new ArrayList<>();
+
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
@@ -39,9 +41,8 @@ public class DrawPanel extends JPanel implements CarObserver {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
 
-        for (Drivable vehicle : vehicles) {
+        for (Drivable vehicle : this.drivables) {
             int x = (int) Math.round(vehicle.getPosition().getX());
             int y = (int) Math.round(vehicle.getPosition().getY());
 
@@ -55,12 +56,23 @@ public class DrawPanel extends JPanel implements CarObserver {
                 g.drawImage(transportImage, x, y, null);
             }
         }
+
+        for (LoadChecker vehicle : this.loadCheckers) {
+            int x = (int) Math.round(vehicle.getPosition().getX());
+            int y = (int) Math.round(vehicle.getPosition().getY());
+
+            if (vehicle instanceof WorkShop<?>) {
+                g.drawImage(volvoWorkshopImage, x, y, null);
+            }
+        }
+
         Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
     public void actOnStatusChange(CarStatus carStatus) {
-        this.vehicles = carStatus.getVehicles();
+        this.drivables = carStatus.getDrivables();
+        this.loadCheckers = carStatus.getLoadCheckers();
         this.repaint();
     }
 }

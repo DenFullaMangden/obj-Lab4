@@ -14,7 +14,7 @@ public class CarModel implements CarModelInterface{
     private int height;
     private Timer timer;
     public final List<Drivable> drivables = new ArrayList<Drivable>();
-    public final List<CarLoader<?>> carLoaders = new ArrayList<CarLoader<?>>();
+    public final List<LoadChecker<?>> loadCheckers = new ArrayList<LoadChecker<?>>();
     private final List<CarObserver> observers = new ArrayList<CarObserver>();
 
     public void startTimer(int delay, int height, int width) {
@@ -98,7 +98,7 @@ public class CarModel implements CarModelInterface{
         if (this.drivables.size() < 10) {
             Drivable car = RandomVehicleFactory.createRandomVehicle(this.width-100, this.height-60);
             this.drivables.add(car);
-            this.multicastStatusChange(new CarStatus(this.drivables));
+            this.multicastStatusChange(new CarStatus(this.drivables, this.loadCheckers));
         }
     }
 
@@ -106,7 +106,7 @@ public class CarModel implements CarModelInterface{
     public void removeVehicle() {
         if (!this.drivables.isEmpty()) {
             this.drivables.removeLast();
-            this.multicastStatusChange(new CarStatus(this.drivables));
+            this.multicastStatusChange(new CarStatus(this.drivables, this.loadCheckers));
         }
     }
 
@@ -137,8 +137,8 @@ public class CarModel implements CarModelInterface{
                 drivable.move();
             }
 
-            for (CarLoader<?> loader : CarModel.this.carLoaders) {
-                Class<?> type = loader.getCarType();
+            for (LoadChecker<?> loader : CarModel.this.loadCheckers) {
+                Class<?> type = loader.GetStorableType();
                 for (Drivable drivable : drivables) {
                     if (type.isInstance(drivable)) {
                         loader.tryToLoad((SmallCar) drivable);
@@ -146,7 +146,7 @@ public class CarModel implements CarModelInterface{
                 }
             }
 
-            multicastStatusChange(new CarStatus(CarModel.this.drivables));
+            multicastStatusChange(new CarStatus(CarModel.this.drivables, CarModel.this.loadCheckers));
         }
     }
 }

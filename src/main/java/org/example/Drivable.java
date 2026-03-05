@@ -1,6 +1,6 @@
 package org.example;
 
-public interface Drivable extends Movable, Positionable {
+public interface Drivable extends Movable {
     public double getCurrentSpeed();
 
     public boolean getEngineOn();
